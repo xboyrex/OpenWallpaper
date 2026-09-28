@@ -1,0 +1,13 @@
+[
+  {
+    "id": "aurora-001",
+    "title": "Aurora Mountain",
+    "category": "Nature",
+    "width": 3840,
+    "height": 2160,
+    "full_url": "https://YOUR-R2-DOMAIN.example/wallpapers/aurora-001.jpg",
+    "thumb_url": "https://YOUR-R2-DOMAIN.example/thumbs/aurora-001.webp",
+    "size_bytes": 2458120,
+    "updated_at": "2026-09-28T16:00:00Z"
+  }
+]
