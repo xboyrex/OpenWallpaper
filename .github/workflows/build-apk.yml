@@ -17,17 +17,22 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build Debug APK
         run: gradle --no-daemon :app:assembleDebug
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/debug
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Generate Keystore and Sign APK
+        run: |
+          # Generate debug keystore on the runner
+          keytool -genkey -v -keystore debug.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias debug -storepass android -keypass android -dname "CN=Android Debug,O=Android,C=US"
+          
+          # Find apksigner in Android SDK
+          APK_SIGNER=$(find $ANDROID_HOME/build-tools -name apksigner | sort -r | head -n 1)
+          
+          # Sign the APK
+          $APK_SIGNER sign --ks debug.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias debug app/build/outputs/apk/debug/app-debug.apk
+          
+          # Rename the signed APK
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/OpenWallpaper-${{ github.ref_name }}.apk
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: app/build/outputs/apk/debug/app-debug-signed.apk
+          files: app/build/outputs/apk/debug/OpenWallpaper-${{ github.ref_name }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
