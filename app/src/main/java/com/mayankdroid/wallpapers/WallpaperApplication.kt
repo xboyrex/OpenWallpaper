@@ -1,4 +1,5 @@
 package com.mayankdroid.wallpapers
+import okio.Path.Companion.toOkioPath
 
 import android.app.Application
 import coil3.ImageLoader
@@ -16,7 +17,7 @@ class WallpaperApplication : Application(), SingletonImageLoader.Factory {
             }
             .diskCache {
                 DiskCache.Builder()
-                    .directory(context.cacheDir.resolve("wallpaper_image_cache"))
+                    .directory(context.cacheDir.resolve("wallpaper_image_cache").toOkioPath())
                     .maxSizePercent(0.08)
                     .build()
             }
