@@ -1,13 +1,19 @@
-package com.mayankdroid.wallpapers
+git add .
+git commit -m "Fix launcher icon, add Compose dependencies, and fix imports"
+git push origin main
+
+# Ab naya tag banao taaki build trigger ho
+git tag v1.0.1
+git push origin v1.0.1package com.mayankdroid.wallpapers
 
 import android.Manifest
 import android.app.DownloadManager
 import android.app.WallpaperManager
 import android.content.Context
+
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
+import android.os.Bundlimport android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
